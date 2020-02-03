@@ -1,10 +1,8 @@
-//librerías
 #include <Adafruit_Fingerprint.h>
 #include <SoftwareSerial.h>
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 
-//variables
 bool motor1 = 12;
 bool motor2 = 11;
 bool motor3 = 10;
@@ -14,11 +12,8 @@ bool VARIABLE2;
 double variablepuerta;
 int getFingerprintIDez();
 
-
-//ajuste de caracteres de la pantalla
 LiquidCrystal_I2C lcd(0x27,20,4);
 
-//transmisión de datos por el puerto serial
 SoftwareSerial mySerial (52, 53);
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 void fnc_bt_serial_namepin(String _name,String _pin){
@@ -31,7 +26,6 @@ void fnc_bt_serial_namepin(String _name,String _pin){
 	Serial2.flush();
 }
 
-//ajuste de los pines de conexión de la pantalla y de lo que se ejecuta
 void setup(){
   lcd.init();                     
   lcd.backlight();
@@ -58,7 +52,6 @@ void setup(){
   lcd.print ("ESPERANDO HUELLA");
 }
 
-//variables del control de puerta via bluetooth
 void loop(){
    if ((Serial2.available()>0)) {
       variablepuerta = Serial2.read();
@@ -84,12 +77,10 @@ void loop(){
 
     }
 
-    //sacar ID de la huella
    getFingerprintIDez();
   delay(50);
 }
 
-//variables del sensor de huellas e imprimir en la pantalla la respuesta de la huella
 uint8_t getFingerprintID() {
  uint8_t p = finger.getImage();
   switch (p) {
@@ -173,8 +164,8 @@ int getFingerprintIDez() {
   lcd.clear();
   Serial.print("ENCONTRADA ID #"); Serial.print(finger.fingerID); 
   Serial.print(" CON UNA COINCIDENCIA DE "); Serial.println(finger.confidence);
-  Serial.println(" ENRIQUE PIQUERAS MARTINEZ - APERTURA PERMITIDA"); 
-  lcd.print ("ENRIQUE PIQUERAS");
+  Serial.println(" PERSONA 1 - APERTURA PERMITIDA"); 
+  lcd.print ("PERSONA 1");
   lcd.setCursor(0,1);
   lcd.print("ABRIENDO  PUERTA");
   digitalWrite(12 , HIGH);
@@ -191,8 +182,8 @@ int getFingerprintIDez() {
   lcd.clear();
   Serial.print("ENCONTRADA ID #"); Serial.print(finger.fingerID); 
   Serial.print(" CON UNA COINCIDENCIA DE "); Serial.println(finger.confidence);
-  Serial.println(" ENRIQUE PIQUERAS MARTINEZ - CIERRE PERMITIDO"); 
-  lcd.print ("ENRIQUE PIQUERAS");
+  Serial.println(" PERSONA 1 - CIERRE PERMITIDO"); 
+  lcd.print ("PERSONA 1");
   lcd.setCursor(0,1);
   lcd.print("CERRANDO  PUERTA");
   digitalWrite(10 , HIGH);
